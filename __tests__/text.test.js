@@ -14,11 +14,13 @@ describe("Text Class", () => {
 describe("Text Class", () => {
     describe("evalLength", () => {
         // should be no more than three characters
-        it("should be no more than three characters", () => {
+        // should be no less than one character
+        it("should be no more than three characters and no less than one character", () => {
             const text = new Text
             const result = text.render();
             const value = result.length;
             expect(value).toBeLessThan(4)
+            expect(value).toBeGreaterThan(0)
         })
     })
 })

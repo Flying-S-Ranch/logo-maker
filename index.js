@@ -1,9 +1,11 @@
 // DEPENDENCIES
 const inquirer = require('inquirer')
 const fs = require('fs')
+const Text = require('./lib/text.js')
 
 // DATA STATE
 let template;
+let userShape
 const questions = [
     {
       type: 'list',
@@ -28,25 +30,36 @@ const questions = [
     },
 ]
 
+const shapeSVG = [
+  `<circle cx="150" cy="100" r="80"`,
+  `<rect x="35" y="10" width="80" height="80"`,
+  `<polygon points = "75, 10 45, 90 105, 90"`
+]
+
 // FUNCTIONS
-const drawSVG = ({shapeColor, text, textColor}) => {
-// if (shape === 'circle') {
-//         let userShape = '<circle cx="150" cy="100" r="80"/>'
-//     } else if (shape === 'square') {
-//         let userShape = '<rect x="35" y="10" width="80" height="80"/>'
-//     } else if (shape === 'triangle') {
-//         let userShape = '<polygon points = "75, 10 45, 90 105, 90"/>'
-//     }
+const drawSVG = ({text, textColor, shapeColor, shape}) => {
+  // Text()
+// if(text.length < 4 && text.length > 0) {
+//   let userText = {text}
+// } else {
+//   console.log("Please run node index again, and enter 1-3 characters of text")
+// }
+function chooseShape() {
+  const shapeIndex = questions[0].choices.indexOf(shape)
+  userShape = shapeSVG[shapeIndex]
+}
+chooseShape
+
 template = 
 `<svg version="1.1"
       width="300" height="200"
       xmlns="http://www.w3.org/2000/svg"/>
   <rect width="100%" height="100%" fill="white"/>
-  <circle cx="150" cy="100" r="80" fill="${shapeColor}"/>
+  ${userShape} fill="${shapeColor}"/>
   <text x="150" y="125" font-size="50" text-anchor="middle" fill="${textColor}">${text}</text>
 </svg>`
 
-fs.writeFile('logo.svg', template, (err) => {
+fs.writeFile('./examples/logo.svg', template, (err) => {
     if (err) throw err;
     console.log('Generated logo.svg')
 }
